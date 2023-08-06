@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import newlife.patterns.Blinker;
+import newlife.patterns.Block;
+import newlife.patterns.Glider;
 import newlife.patterns.Pattern;
 
 public class LifeSimTest {
@@ -66,6 +69,40 @@ public class LifeSimTest {
                 assertEquals(sim2.getCell(i, j), data2[i][j], "Wrong pattern in cell");
             }
         }
+    }
+
+    @Test
+    void TestUpdate() {
+        final int x = 10;
+        final int y = 10;
+        final int startx = 0;
+        final int starty = 0;
+        final int startx2 = 7;
+        final int starty2 = 7;
+
+        LifeSim sim = new LifeSim(x, y);
+        sim.insertPattern(new Glider(), startx, starty);
+        sim.insertPattern(new Blinker(), startx2, starty2);
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                assertEquals(sim.getCell(i, j), data3[i][j], "Wrong value in cell");
+            }
+        }
+        sim.update();
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                assertEquals(sim.getCell(i, j), update1[i][j], "Wrong value in cell");
+            }
+        }
+        sim.update();
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                assertEquals(sim.getCell(i, j), update2[i][j], "Wrong value in cell");
+            }
+        }
 
     }
 
@@ -95,6 +132,45 @@ public class LifeSimTest {
             { false, false, false, false, false, false, false, false, false, false }
     };
 
+    boolean data3[][] = {
+            { false, false, true, false, false, false, false, false, false, false },
+            { true, false, true, false, false, false, false, false, false, false },
+            { false, true, true, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, true, true, true },
+            { false, false, false, false, false, false, false, false, false, false }
+    };
+
+    boolean update1[][] = {
+            { false, true, false, false, false, false, false, false, false, false },
+            { false, false, true, true, false, false, false, false, false, false },
+            { false, true, true, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, true, false },
+            { false, false, false, false, false, false, false, false, true, false },
+            { false, false, false, false, false, false, false, false, true, false }
+    };
+
+    boolean update2[][] = {
+            { false, false, true, false, false, false, false, false, false, false },
+            { false, false, false, true, false, false, false, false, false, false },
+            { false, true, true, true, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, true, true, true },
+            { false, false, false, false, false, false, false, false, false, false }
+    };
+
     private class TestPattern1 extends Pattern {
         public TestPattern1() {
             this.pattern = new boolean[][] {
@@ -116,5 +192,4 @@ public class LifeSimTest {
             };
         }
     }
-
 }

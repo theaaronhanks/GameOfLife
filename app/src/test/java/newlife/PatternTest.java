@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PatternTest {
 
-    @Test 
+    @Test
     void TestAcornPattern() {
         Acorn acorn = new Acorn();
         int x = acorn.getSizeX();
@@ -35,12 +35,12 @@ class PatternTest {
     void TestBlinkerPattern() {
         Blinker blinker = new Blinker();
         int x = blinker.getSizeX();
-        int y = blinker.getSizeY();                
-        
+        int y = blinker.getSizeY();
+
         // Pattern is correct shape
         assertEquals(3, x, "Blinker shape has an incorrect number of rows.");
         assertEquals(3, y, "Blinker shape has an incorrect number of columns.");
-        
+
         // Pattern values are correct
         assertFalse(blinker.getCell(0, 1), "Blinker values are incorrect");
         assertTrue(blinker.getCell(1, 2), "Blinker values are incorrect");
@@ -55,12 +55,12 @@ class PatternTest {
     void TestBlockPattern() {
         Block block = new Block();
         int x = block.getSizeX();
-        int y = block.getSizeY();                
-        
+        int y = block.getSizeY();
+
         // Pattern is correct shape
         assertEquals(2, x, "Block shape has an incorrect number of rows.");
         assertEquals(2, y, "Block shape has an incorrect number of columns.");
-        
+
         // Pattern values are correct
         assertTrue(block.getCell(0, 0), "Block values are incorrect");
         assertTrue(block.getCell(1, 0), "Block values are incorrect");
@@ -75,12 +75,12 @@ class PatternTest {
     void TestGliderPattern() {
         Glider glider = new Glider();
         int x = glider.getSizeX();
-        int y = glider.getSizeY();                
-        
+        int y = glider.getSizeY();
+
         // Pattern is correct shape
         assertEquals(3, x, "Glider shape has an incorrect number of rows.");
         assertEquals(3, y, "Glider shape has an incorrect number of columns.");
-        
+
         // Pattern values are correct
         assertTrue(glider.getCell(0, 2), "Glider values are incorrect");
         assertFalse(glider.getCell(1, 1), "Glider values are incorrect");

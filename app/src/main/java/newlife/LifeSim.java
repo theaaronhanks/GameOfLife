@@ -56,49 +56,28 @@ public class LifeSim {
 
     private int checkNeighbors(int x, int y) {
         int count = 0;
-        if (this.getCell(x - 1, y - 1)) {
-            count++;
-        }
-        if (this.getCell(x, y - 1)) {
-            count++;
-        }
-        if (this.getCell(x + 1, y - 1)) {
-            count++;
-        }
-        if (this.getCell(x - 1, y)) {
-            count++;
-        }
-        if (this.getCell(x + 1, y)) {
-            count++;
-        }
-        if (this.getCell(x - 1, y + 1)) {
-            count++;
-        }
-        if (this.getCell(x, y + 1)) {
-            count++;
-        }
-        if (this.getCell(x + 1, y + 1)) {
-            count++;
+
+        for (int i = x - 1; i < x + 2; i++) {
+            for (int j = y - 1; j < y + 2; j++) {
+                if (i == x && j == y)
+                    continue;
+                if (this.getCell(i, j))
+                    count++;
+            }
         }
 
-        // for (int i = x-1; i< x+2; i++) {
-        // for (int j= y-1; j<y+2; j++) {
-        // if (i==x && j==y) continue;
-        // if (this.getCell(i, j)) count++;
-        // }
-        // }
         return count;
     }
 
     public void update() {
-        boolean[][] nextWorld = new boolean[this.getSizeY()][this.getSizeX()]; //create a new grid
+        boolean[][] nextWorld = new boolean[this.getSizeY()][this.getSizeX()]; // create a new grid
         for (int i = 0; i < this.world.length; i++) {
             for (int j = 0; j < this.world[i].length; j++) {
                 int count = checkNeighbors(i, j);
 
-                if (this.getCell(i, j) && ((count == 2) || (count == 3) )) {
+                if (this.getCell(i, j) && ((count == 2) || (count == 3))) {
                     nextWorld[i][j] = true;
-                } else if ( !this.getCell(i, j) && count == 3){
+                } else if (!this.getCell(i, j) && count == 3) {
                     nextWorld[i][j] = true;
                 } else {
                     nextWorld[i][j] = false;
