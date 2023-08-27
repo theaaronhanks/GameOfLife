@@ -70,7 +70,7 @@ public class LifeSim {
     }
 
     public void update() {
-        boolean[][] nextWorld = new boolean[this.getSizeY()][this.getSizeX()]; // create a new grid
+        boolean[][] nextWorld = new boolean[this.getSizeX()][this.getSizeY()]; // create a new grid
         for (int i = 0; i < this.world.length; i++) {
             for (int j = 0; j < this.world[i].length; j++) {
                 int count = checkNeighbors(i, j);

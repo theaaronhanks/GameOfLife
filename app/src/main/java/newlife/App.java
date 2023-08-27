@@ -3,12 +3,63 @@
  */
 package newlife;
 
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+
+import newlife.patterns.*;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        System.out.println(args[0]);
+
+        try {
+            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            Screen screen = new TerminalScreen(terminal);
+            TextGraphics graphics = screen.newTextGraphics();
+
+            TerminalSize size = screen.getTerminalSize();
+            if (size.getColumns() ==0 || size.getRows() == 0) System.exit(1);
+            LifeSim simulation = new LifeSim(size.getColumns(), size.getRows());
+            simulation.setRandomState();
+            // simulation.insertPattern(new Block(), size.getColumns() - 2, size.getRows()+2);
+            // simulation.insertPattern(new Blinker(), 0, 10);
+            // simulation.insertPattern(new Glider(), 15, 0);
+            // simulation.insertPattern(new Acorn(), 40, 10);
+
+            screen.startScreen();
+            screen.setCursorPosition(null);
+
+            for (int i = 0; i < 200; i++) {
+                render(simulation, screen, graphics); // Render the current state of the simulation
+                Thread.yield(); // Let the JVM have some time to update other things
+                Thread.sleep(100); // Sleep for a bit to make for a nicer paced animation
+                simulation.update(); // Tell the simulation to update
+            }
+
+            screen.stopScreen();
+        } catch (Exception ex) {
+            System.out.println("Something bad happened: " + ex.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public static void render(LifeSim simulation, Screen screen, TextGraphics graphics) {
+        screen.clear();
+        for (int i = 0; i < simulation.getSizeX(); i++) {
+            for (int j = 0; j < simulation.getSizeY(); j++) {
+                if (simulation.getCell(i, j)) {
+                    graphics.setCharacter(i, j, 'X');
+                }
+            }
+        }
+        try {
+            screen.refresh();
+        } catch (Exception ex) {
+        }
     }
 }

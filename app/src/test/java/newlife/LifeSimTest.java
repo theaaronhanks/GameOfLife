@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import newlife.patterns.Blinker;
-import newlife.patterns.Block;
 import newlife.patterns.Glider;
 import newlife.patterns.Pattern;
 
