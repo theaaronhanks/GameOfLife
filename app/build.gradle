@@ -43,7 +43,10 @@ jar {
     manifest {
         attributes 'Main-Class': 'newlife.App'
     }
-    archiveBaseName = 'ConwaysLife'
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it)}
+    }
+    archiveBaseName = 'game-of-life'
 }
 
 testlogger {
